@@ -1,8 +1,4 @@
 /*
-    angular-touch-no-ng-click
-
-    Copyright (c) 2016 Incuna Ltd.
-    Licensed under the MIT license.
 
     Modules:
     - ngTouchNoNgClick

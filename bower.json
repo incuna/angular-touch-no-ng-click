@@ -1,0 +1,32 @@
+{
+  "name": "angular-touch-no-ng-click",
+  "description": "Allows you to use ngTouch without its touch-enabled ngClick override",
+  "main": "dist/angular-touch-no-ng-click.min.js",
+  "authors": [
+    "Henry Blyth <blyth.henry@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "angular-touch",
+    "ngTouch",
+    "ngClick",
+    "ng-click"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.2.x - 1.4.x",
+    "angular-touch": "1.2.x - 1.4.x"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.x - 1.4.x"
+  }
+}

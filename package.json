@@ -1,0 +1,40 @@
+{
+  "name": "angular-touch-no-ng-click",
+  "version": "0.0.0",
+  "description": "Allows you to use ngTouch without its touch-enabled ngClick override",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "bower": "1.7.7",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-concat": "1.0.0",
+    "grunt-contrib-uglify": "1.0.0",
+    "grunt-karma": "0.12.1",
+    "jasmine": "2.4.1",
+    "jasmine-expect": "2.0.2",
+    "jit-grunt": "0.10.0",
+    "karma": "0.13.22",
+    "karma-coverage": "0.5.5",
+    "karma-firefox-launcher": "0.1.7",
+    "karma-jasmine": "0.3.7",
+    "load-grunt-tasks": "3.4.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "grunt watch",
+    "test": "grunt test-src",
+    "preversion": "npm test",
+    "version": "grunt dist test && git add -A dist"
+  },
+  "keywords": [
+    "angular",
+    "angular-touch",
+    "ngTouch",
+    "ngClick",
+    "ng-click"
+  ],
+  "author": "Henry Blyth <blyth.henry@gmail.com>",
+  "license": "MIT"
+}
