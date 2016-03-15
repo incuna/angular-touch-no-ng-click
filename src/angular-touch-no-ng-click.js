@@ -59,6 +59,7 @@
                 // dependency, meaning its config phase will have run before
                 // this and the original ngClick directive will no longer be
                 // available. All we can do now is error.
+                state.incompatible = true;
                 throw new Error(
                     'ngTouchNoNgClick: original ngClick directive is not ' +
                     'accessible. ngTouch must not be set as a dependency ' +
@@ -72,6 +73,10 @@
             $provide.decorator('ngClickDirective', [
                 '$delegate',
                 function ($delegate) {
+                    if (state.incompatible) {
+                        // Do nothing.
+                        return $delegate;
+                    }
                     if ($delegate.length > 2) {
                         // There are extra ngClick directives, so we cannot know
                         // the $delegate index position of ngTouch's override to
