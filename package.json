@@ -26,7 +26,7 @@
     "start": "grunt watch",
     "test": "grunt test-src",
     "preversion": "npm test",
-    "version": "grunt dist test && git add -A dist"
+    "version": "grunt dist test-dist && git add -A dist"
   },
   "keywords": [
     "angular",

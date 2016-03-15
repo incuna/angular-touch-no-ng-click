@@ -11,12 +11,12 @@ module.exports = function (grunt) {
     }
 
     grunt.initConfig({
-        bower: grunt.file.readJSON('bower.json'),
+        pkg: grunt.file.readJSON('package.json'),
         concat: {
             dist: {
                 options: {
                     banner: '/*\n' +
-                            '    <%= bower.name %> - v<%= bower.version %>\n' +
+                            '    <%= pkg.name %> - v<%= pkg.version %>\n' +
                             '\n' +
                             '    Copyright (c) <%= grunt.template.today("yyyy") %> Incuna Ltd.\n' +
                             '    Licensed under the MIT license.\n' +
