@@ -25,8 +25,8 @@
     "postinstall": "bower install",
     "start": "grunt watch",
     "test": "grunt test-src",
-    "preversion": "npm test",
-    "version": "grunt dist test-dist && git add -A dist"
+    "preversion": "grunt dist test",
+    "version": "grunt dist && git add -A dist"
   },
   "keywords": [
     "angular",
