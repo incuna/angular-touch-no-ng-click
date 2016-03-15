@@ -114,3 +114,35 @@ module.directive('ngClickCustom', function () {
 ```html
 <div ng-click-custom="foo = true">Click me</div>
 ```
+
+## Development
+
+This repository uses npm scripts: `install`, `start`, `test`, and `version`. See `package.json` for more info.
+
+Setup:
+```shell
+npm install
+```
+
+Run tests:
+```shell
+npm test
+```
+
+Repeatedly run tests whilst writing code:
+```shell
+npm start
+```
+
+## Releases
+
+- Update the changelog with the relevant changes
+- Determine the new version based on [Semver](http://semver.org/)
+- Set the version number in the changelog and commit
+- Use `npm version` to make a new release
+
+`npm version` will create a distribution, test it, and commit the dist files and the changelog. If the tests fail, something is wrong with the distrubition: check the minifier options.
+
+The `preversion` script will make a distribution and test it, then the distribution is remade in the `version` script to have access to the new version.
+
+Run `npm help version` to see how to use the command.
