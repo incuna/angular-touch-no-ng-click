@@ -6,6 +6,12 @@ Allows you to use `ngTouch` without its touch-enabled `ngClick` override.
 
 If you're **using Angular v1.5.0 or greater**, you don't need this module: ngTouch's ngClick override is disabled by default. See https://code.angularjs.org/1.5.0/docs/api/ngTouch/directive/ngClick
 
+## Modules
+
+This library provides the `ngTouchNoNgClick` module. Use it as a dependency in place of `ngTouch`, but keep sourcing `angular-touch.js`.
+
+It also exposes two other modules named `ngTouchNoNgClickBefore` and `ngTouchNoNgClickAfter`. Do not use these yourself: they are for internal configuration. Using them may cause errors.
+
 ## Usage
 
 Install:
