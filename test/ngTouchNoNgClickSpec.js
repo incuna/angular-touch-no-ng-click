@@ -19,8 +19,8 @@
         });
     };
 
-    // Replicate ngMobile simply by decorating ngClickDirective in the same
-    // manner and provide a new ngClickDirective.
+    // Replicate ngMobile simply by decorating ngClick directive in the same
+    // manner and provide a new ngClick directive.
     // TODO: test against Angular v1.1.5 with ngMobile instead of mocking.
     var mockNgMobile = function () {
         var ngMobileMock = angular.module('ngMobile', []);
@@ -100,12 +100,12 @@
 
                 });
 
-                describe('without project ngClickDirectives', function () {
+                describe('without project ngClick directives', function () {
 
                     beforeEach(function () {
 
                         // Allow checking on the registered and resulting
-                        // ngClickDirectives.
+                        // ngClick directives.
                         var self = this;
                         module(function ($provide) {
                             $provide.decorator('ngClickDirective', function ($delegate) {
@@ -129,10 +129,10 @@
                         expect(this.run).not.toThrow();
                     });
 
-                    it('should restore the original ngClickDirective', function () {
+                    it('should restore the original ngClick directive', function () {
                         this.loadThisModule();
                         this.run();
-                        // Two ngClickDirectives registered.
+                        // Two ngClick directives registered.
                         expect(this.ngClickCompileFns.length).toBe(2);
                         // One left after the config phase.
                         expect(this.ngClickRegistry.length).toBe(1);
@@ -142,50 +142,50 @@
 
                 });
 
-                describe('with project ngClickDirectives already registered', function () {
+                describe('with project ngClick directives already registered', function () {
 
                     it('should error that this module is incompatible', function () {
                         this.addOtherNgClick();
                         this.loadThisModule();
 
-                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClickDirectives');
+                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
                     });
 
                 });
 
-                describe('with project ngClickDirectives registered after', function () {
+                describe('with project ngClick directives registered after', function () {
 
                     it('should error that this module is incompatible', function () {
                         this.loadThisModule();
                         this.addOtherNgClick();
 
-                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClickDirectives');
+                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
                     });
 
                 });
 
                 describe('with ngTouch already loaded', function () {
 
-                    it('should error that the original ngClickDirective is inaccessible', function () {
+                    it('should error that the original ngClick directive is inaccessible', function () {
                         module('ngTouch');
                         this.loadThisModule();
                         // Use a regex to match because a `[$injector:modulerr]`
                         // error is thrown, which contains the module initialise
                         // stack trace.
-                        expect(this.run).toThrowError(/ngTouchNoNgClick: original ngClickDirective is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
+                        expect(this.run).toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
                     });
 
                 });
 
                 describe('with ngTouch loaded after', function () {
 
-                    it('should not error that the original ngClickDirective is inaccessible', function () {
+                    it('should not error that the original ngClick directive is inaccessible', function () {
                         this.loadThisModule();
                         module('ngTouch');
                         // Use a regex to match because a `[$injector:modulerr]`
                         // error is thrown, which contains the module initialise
                         // stack trace.
-                        expect(this.run).not.toThrowError(/ngTouchNoNgClick: original ngClickDirective is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
+                        expect(this.run).not.toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
                     });
 
                 });
@@ -201,7 +201,7 @@
 
             beforeEach(function () {
 
-                // Mock ngTouch so no ngClickDirective is registered by it.
+                // Mock ngTouch so no ngClick directive is registered by it.
                 angular.module('ngTouch', []);
                 module('ngTouchNoNgClick');
 

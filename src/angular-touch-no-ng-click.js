@@ -8,9 +8,9 @@
     - v1.1.5+ for ngMobile
     - v1.2.0 to latest v1.4.x for ngTouch
 
-    ngTouchNoNgClick allows the disabling of ngTouch's ngClickDirective override
-    by saving the original directive definition before ngTouch's config phase
-    can override it and restoring it after.
+    ngTouchNoNgClick allows the disabling of ngTouch's ngClick directive
+    override by saving the original directive definition before ngTouch's config
+    phase can override it and restoring it after.
 
     Angular 1.2.0 renamed ngMobile to ngTouch, so we have to provide two
     separate modules: one depending on ngMobile, the other depending on ngTouch.
@@ -25,7 +25,7 @@
     does not support v1.1.4, but it does support v1.1.5 because it introduced
     ngSwipeLeftDirective and ngSwipeRightDirective.
 
-    ngTouchNoNgClick is incompatible with an app if any other ngClickDirectives
+    ngTouchNoNgClick is incompatible with an app if any other ngClick directives
     are registered.
 
 */
@@ -83,10 +83,10 @@
             if ($injector.has('ngSwipeLeftDirective')) {
                 // The ngTouch module has already been registered as a
                 // dependency, meaning its config phase will have run before
-                // this and the original ngClickDirective will no longer be
+                // this and the original ngClick directive will no longer be
                 // available. All we can do now is error.
                 throw new Error(
-                    'ngTouchNoNgClick: original ngClickDirective is not ' +
+                    'ngTouchNoNgClick: original ngClick directive is not ' +
                     'accessible. ngTouch must not be set as a dependency ' +
                     'before ngTouchNoNgClick. Either remove ngTouch from ' +
                     'your app dependencies, or make ngTouchNoNgClick the ' +
@@ -99,23 +99,23 @@
                 '$delegate',
                 function ($delegate) {
                     if ($delegate.length > 2) {
-                        // There are extra ngClickDirectives, so we cannot know
+                        // There are extra ngClick directives, so we cannot know
                         // the $delegate index position of ngTouch's override to
                         // restore the original.
                         // Throwing an error here may not stop app execution, so
                         // we need a flag to know to not to override the
-                        // ngClickDirectives in the ngTouchNoNgClickAfter
+                        // ngClick directives in the ngTouchNoNgClickAfter
                         // module's config phase, below.
                         state.incompatible = true;
                         throw new Error(
                             'ngTouchNoNgClick is incompatible with apps or ' +
                             'modules that have registered their own ' +
-                            'ngClickDirectives'
+                            'ngClick directives'
                         );
                     }
                     if ($delegate.length > 1) {
-                        // ngTouch has registered its own ngClickDirective, so save
-                        // the original one.
+                        // ngTouch has registered its own ngClick directive, so
+                        // save the original one.
                         state.ngClickDirectiveOriginal = $delegate[0];
                     }
                     return $delegate;
@@ -140,8 +140,9 @@
                         return $delegate;
                     }
                     if (state.ngClickDirectiveOriginal) {
-                        // The original ngClickDirective has been removed by ngTouch
-                        // so write over the ngTouch override with the original.
+                        // The original ngClick directive has been removed by
+                        // ngTouch so write over the ngTouch override with the
+                        // original.
                         $delegate[0] = state.ngClickDirectiveOriginal;
                     }
                     return $delegate;
