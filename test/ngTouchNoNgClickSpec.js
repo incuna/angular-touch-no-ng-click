@@ -19,24 +19,6 @@
         });
     };
 
-    // Replicate ngMobile simply by decorating ngClick directive in the same
-    // manner and provide a new ngClick directive.
-    // TODO: test against Angular v1.1.5 with ngMobile instead of mocking.
-    var mockNgMobile = function () {
-        var ngMobileMock = angular.module('ngMobile', []);
-        // Copied from ngMobile, and it's identical in the versions of ngTouch
-        // this module supports.
-        ngMobileMock.config(function ($provide) {
-            $provide.decorator('ngClickDirective', function($delegate) {
-                // drop the default ngClick directive
-                $delegate.shift();
-                return $delegate;
-            });
-        });
-        // This directive can be empty, it isn't used, just needs to be defined.
-        mockDirective('ngClick');
-    };
-
     describe('angular-touch-no-ng-click', function () {
 
         beforeEach(function () {
@@ -68,133 +50,108 @@
                         }
                     };
                 }
-            })
+            });
+
+            this.addOtherNgClick = () => mockDirective('ngClick');
+
+            this.loadThisModule = () => module('ngTouchNoNgClick');
+
+            this.run = () => {
+                // Run the injector.
+                inject(function (ngClickDirective) {});
+            };
 
         });
 
-        // The code is the same for both dependencies, so add the same tests.
-        var makeSuiteForVersion = function (ngDependency) {
-            if (ngDependency !== 'ngMobile' && ngDependency !== 'ngTouch') {
-                throw new Error('Unsupported ngDependency');
-            }
+        describe('without project ngClick directives', function () {
 
-            describe('with ' + ngDependency + ':', function () {
+            beforeEach(function () {
 
-                beforeEach(function () {
-
-                    this.moduleName = 'ngTouchNoNgClick';
-                    if (ngDependency === 'ngMobile') {
-                        this.moduleName = 'ngTouchNoNgClick-v1.1';
-                        // Mock the ngMobile module.
-                        mockNgMobile();
-                    }
-
-                    this.addOtherNgClick = () => mockDirective('ngClick');
-
-                    this.loadThisModule = () => module(this.moduleName);
-
-                    this.run = () => {
-                        // Run the injector.
-                        inject(function (ngClickDirective) {});
-                    };
-
-                });
-
-                describe('without project ngClick directives', function () {
-
-                    beforeEach(function () {
-
-                        // Allow checking on the registered and resulting
-                        // ngClick directives.
-                        var self = this;
-                        module(function ($provide) {
-                            $provide.decorator('ngClickDirective', function ($delegate) {
-                                // $delegate is the value stored in Angular. We
-                                // can access it by reference and see changes
-                                // to it.
-                                self.ngClickRegistry = $delegate;
-                                // Here we save just the compile functions of
-                                // all registered directives, thus providing a
-                                // copy for comparing against the registry.
-                                self.ngClickCompileFns = $delegate.map(directive => directive.compile);
-                                // Return without modification.
-                                return $delegate;
-                            })
-                        });
-
-                    });
-
-                    it('should run without error', function () {
-                        this.loadThisModule();
-                        expect(this.run).not.toThrow();
-                    });
-
-                    it('should restore the original ngClick directive', function () {
-                        this.loadThisModule();
-                        this.run();
-                        // Two ngClick directives registered.
-                        expect(this.ngClickCompileFns.length).toBe(2);
-                        // One left after the config phase.
-                        expect(this.ngClickRegistry.length).toBe(1);
-                        // It's the first one registered, the original ngClick.
-                        expect(this.ngClickRegistry[0].compile).toBe(this.ngClickCompileFns[0]);
-                    });
-
-                });
-
-                describe('with project ngClick directives already registered', function () {
-
-                    it('should error that this module is incompatible', function () {
-                        this.addOtherNgClick();
-                        this.loadThisModule();
-
-                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
-                    });
-
-                });
-
-                describe('with project ngClick directives registered after', function () {
-
-                    it('should error that this module is incompatible', function () {
-                        this.loadThisModule();
-                        this.addOtherNgClick();
-
-                        expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
-                    });
-
-                });
-
-                describe('with ngTouch already loaded', function () {
-
-                    it('should error that the original ngClick directive is inaccessible', function () {
-                        module('ngTouch');
-                        this.loadThisModule();
-                        // Use a regex to match because a `[$injector:modulerr]`
-                        // error is thrown, which contains the module initialise
-                        // stack trace.
-                        expect(this.run).toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
-                    });
-
-                });
-
-                describe('with ngTouch loaded after', function () {
-
-                    it('should not error that the original ngClick directive is inaccessible', function () {
-                        this.loadThisModule();
-                        module('ngTouch');
-                        // Use a regex to match because a `[$injector:modulerr]`
-                        // error is thrown, which contains the module initialise
-                        // stack trace.
-                        expect(this.run).not.toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
-                    });
-
+                // Allow checking on the registered and resulting
+                // ngClick directives.
+                var self = this;
+                module(function ($provide) {
+                    $provide.decorator('ngClickDirective', function ($delegate) {
+                        // $delegate is the value stored in Angular. We
+                        // can access it by reference and see changes
+                        // to it.
+                        self.ngClickRegistry = $delegate;
+                        // Here we save just the compile functions of
+                        // all registered directives, thus providing a
+                        // copy for comparing against the registry.
+                        self.ngClickCompileFns = $delegate.map(directive => directive.compile);
+                        // Return without modification.
+                        return $delegate;
+                    })
                 });
 
             });
-        };
 
-        makeSuiteForVersion('ngMobile');
-        makeSuiteForVersion('ngTouch');
+            it('should run without error', function () {
+                this.loadThisModule();
+                expect(this.run).not.toThrow();
+            });
+
+            it('should restore the original ngClick directive', function () {
+                this.loadThisModule();
+                this.run();
+                // Two ngClick directives registered.
+                expect(this.ngClickCompileFns.length).toBe(2);
+                // One left after the config phase.
+                expect(this.ngClickRegistry.length).toBe(1);
+                // It's the first one registered, the original ngClick.
+                expect(this.ngClickRegistry[0].compile).toBe(this.ngClickCompileFns[0]);
+            });
+
+        });
+
+        describe('with project ngClick directives already registered', function () {
+
+            it('should error that this module is incompatible', function () {
+                this.addOtherNgClick();
+                this.loadThisModule();
+
+                expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
+            });
+
+        });
+
+        describe('with project ngClick directives registered after', function () {
+
+            it('should error that this module is incompatible', function () {
+                this.loadThisModule();
+                this.addOtherNgClick();
+
+                expect(this.run).toThrowInjectorInvokeError('ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClick directives');
+            });
+
+        });
+
+        describe('with ngTouch already loaded', function () {
+
+            it('should error that the original ngClick directive is inaccessible', function () {
+                module('ngTouch');
+                this.loadThisModule();
+                // Use a regex to match because a `[$injector:modulerr]`
+                // error is thrown, which contains the module initialise
+                // stack trace.
+                expect(this.run).toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
+            });
+
+        });
+
+        describe('with ngTouch loaded after', function () {
+
+            it('should not error that the original ngClick directive is inaccessible', function () {
+                this.loadThisModule();
+                module('ngTouch');
+                // Use a regex to match because a `[$injector:modulerr]`
+                // error is thrown, which contains the module initialise
+                // stack trace.
+                expect(this.run).not.toThrowError(/ngTouchNoNgClick: original ngClick directive is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch/);
+            });
+
+        });
 
         // TODO: this can be tested by testing with Angular v1.5.0+
         describe('with ngClick from ngTouch disabled and not overriding the original (Angular v1.5.0+)', function () {

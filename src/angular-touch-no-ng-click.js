@@ -2,28 +2,13 @@
 
     Modules:
     - ngTouchNoNgClick
-    - ngTouchNoNgClick-v1.1
 
     Support:
-    - v1.1.5+ for ngMobile
-    - v1.2.0 to latest v1.4.x for ngTouch
+    - v1.2.0 to latest v1.4.x
 
     ngTouchNoNgClick allows the disabling of ngTouch's ngClick directive
     override by saving the original directive definition before ngTouch's config
     phase can override it and restoring it after.
-
-    Angular 1.2.0 renamed ngMobile to ngTouch, so we have to provide two
-    separate modules: one depending on ngMobile, the other depending on ngTouch.
-    Since ngTouch is going to be the most used (considering applicable versions
-    and that ngMobile was deprecated), we suffix the ngMobile module with -v1.1
-    to signify that it should be used with Angular v1.1.x.
-
-    ngMobile is available in Angular v1.1.4, but there is nothing else in it but
-    ngClickDirective, so we cannot test if ngTouch has been loaded before this
-    as a dependency. It is imperative that we can test for that, otherwise we
-    cannot know the original ngClickDirective is inaccessible. As such, this
-    does not support v1.1.4, but it does support v1.1.5 because it introduced
-    ngSwipeLeftDirective and ngSwipeRightDirective.
 
     ngTouchNoNgClick is incompatible with an app if any other ngClick directives
     are registered.
@@ -33,17 +18,6 @@
 (function (angular, _) {
 
     'use strict';
-
-    // Semver: ~1.1.5
-    // From 1.1.5 to the last 1.1.x patch version.
-    // 1.1.4 first introduced ngMobile but we cannot work with that because it
-    // doesn't have anything other than ngClickDirective for us to test if the
-    // module has been loaded before this.
-    angular.module('ngTouchNoNgClick-v1.1', [
-        'ngTouchNoNgClickBefore',
-        'ngMobile',
-        'ngTouchNoNgClickAfter'
-    ]);
 
     // Semver: 1.2.x - 1.4.x
     // From 1.2.0 to the last 1.4.x patch version.
