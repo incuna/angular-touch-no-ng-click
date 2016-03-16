@@ -21,3 +21,6 @@ before_script:
 
 script:
   - npm test
+
+notifications:
+    email: false
