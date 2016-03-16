@@ -62,11 +62,30 @@ module.exports = function (grunt) {
                 ],
                 exclude: [],
                 frameworks: ['jasmine'],
-                plugins: ['karma-jasmine', 'karma-firefox-launcher', 'karma-coverage'],
+                plugins: [
+                    'karma-jasmine',
+                    'karma-firefox-launcher',
+                    'karma-coverage'
+                ],
                 preprocessors: {
                     'src/**/*.js': 'coverage'
                 },
                 reporters: ['progress', 'coverage'],
+                coverageReporter: {
+                    dir: 'coverage',
+                    reporters: [
+                        {
+                            // Browser view.
+                            type: 'html'
+                        },
+                        {
+                            type: 'lcovonly',
+                            // Travis uses this path: coverage/lcov.info
+                            subdir: '.',
+                            file: 'lcov.info'
+                        }
+                    ]
+                },
                 port: 9876,
                 colors: true,
                 browsers: ['Firefox'],
