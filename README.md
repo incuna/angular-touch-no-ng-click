@@ -40,9 +40,7 @@ angular.module('app', [
 
 ### ngTouch has already loaded
 
-```
-Error: ngTouchNoNgClick: original ngClickDirective is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch
-```
+`Error: ngTouchNoNgClick: original ngClickDirective is not accessible. ngTouch must not be set as a dependency before ngTouchNoNgClick. Either remove ngTouch from your app dependencies, or make ngTouchNoNgClick the very first dependency before any others that may have a dependency on ngTouch`
 
 Fix:
 - Make `ngTouchNoNgClick` the very first dependency of your app
@@ -67,9 +65,7 @@ angular.module('app', [
 
 ### With other ngClick directives
 
-```
-Error: ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClickDirectives
-```
+`Error: ngTouchNoNgClick is incompatible with apps or modules that have registered their own ngClickDirectives`
 
 Fix:
 - remove/rename all custom `ngClick` directives
@@ -139,10 +135,8 @@ npm start
 - Update the changelog with the relevant changes
 - Determine the new version based on [Semver](http://semver.org/)
 - Set the version number in the changelog and commit
-- Use `npm version` to make a new release
+- Use `npm version` to make a new release: see `npm help version`
 
 `npm version` will create a distribution, test it, and commit the dist files and the changelog. If the tests fail, something is wrong with the distrubition: check the minifier options.
 
 The `preversion` script will make a distribution and test it, then the distribution is remade in the `version` script to have access to the new version.
-
-Run `npm help version` to see how to use the command.
