@@ -4,6 +4,8 @@
 // Without a resolution, `bower install` will ask for one, which isn't possible
 // in Travis.
 
+var fs = require('fs');
+
 var DEBUG = false;
 if (process.env.DEBUG === 'true') {
     DEBUG = true;
@@ -22,11 +24,8 @@ if (!process.env.CI) {
     process.exit(0);
 }
 
-var fs = require('fs');
-var argv = require('yargs').argv;
-
-// Get --angular-version
-var angularVersion = argv.angularVersion;
+// Get the Angular version
+var angularVersion = process.env.ANGULAR_VERSION;
 if (!angularVersion) {
     log('No Angular Version given. Skipping');
     process.exit(0);
