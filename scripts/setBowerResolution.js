@@ -1,3 +1,5 @@
+'use strict';
+
 // Set bower resolutions for Angular packages to value of --angular-version.
 // Without a resolution, `bower install` will ask for one, which isn't possible
 // in Travis.
@@ -5,8 +7,6 @@
 if (!process.env.CI) {
     process.exit(0);
 }
-
-'use strict';
 
 var fs = require('fs');
 var argv = require('yargs').argv;
