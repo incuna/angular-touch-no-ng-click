@@ -1,4 +1,4 @@
-# angular-touch-no-ng-click
+# angular-touch-no-ng-click [![Build Status](https://travis-ci.org/incuna/angular-touch-no-ng-click.svg?branch=master)](https://travis-ci.org/incuna/angular-touch-no-ng-click)
 
 Allows you to use `ngTouch` without its touch-enabled `ngClick` override.
 
