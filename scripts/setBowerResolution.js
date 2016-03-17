@@ -4,7 +4,21 @@
 // Without a resolution, `bower install` will ask for one, which isn't possible
 // in Travis.
 
+var DEBUG = false;
+if (process.env.DEBUG === 'true') {
+    DEBUG = true;
+}
+
+var log = function () {
+    if (DEBUG) {
+        console.log.apply(console, arguments);
+    }
+};
+
+log('Setting version of Angular...');
+
 if (!process.env.CI) {
+    log('Not in Continuous Integration. Skipping');
     process.exit(0);
 }
 
@@ -14,8 +28,12 @@ var argv = require('yargs').argv;
 // Get --angular-version
 var angularVersion = argv.angularVersion;
 if (!angularVersion) {
+    log('No Angular Version given. Skipping');
     process.exit(0);
 }
+log('Angular version: ' + angularVersion);
+
+log('Writing bower dependencies...');
 
 // Get bower.json
 var bowerJSON = JSON.parse(fs.readFileSync('bower.json'));
@@ -24,6 +42,10 @@ var bowerJSON = JSON.parse(fs.readFileSync('bower.json'));
 bowerJSON.dependencies.angular = angularVersion;
 bowerJSON.dependencies['angular-touch'] = angularVersion;
 bowerJSON.devDependencies['angular-mocks'] = angularVersion;
+log('dependencies', bowerJSON.dependencies);
+log('devDependencies', bowerJSON.devDependencies);
 
 // Write bower.json
 fs.writeFileSync('bower.json', JSON.stringify(bowerJSON, null, 2));
+
+log('Done');
