@@ -4,8 +4,6 @@
 
     'use strict';
 
-    // TODO: test against all latest supported Angular versions.
-
     var noopDirectiveCompileFn = function noopDirectiveCompileFn () {};
     var noopDirectiveDefinition = function () {
         return {
@@ -153,8 +151,10 @@
 
         });
 
-        // TODO: this can be tested by testing with Angular v1.5.0+
-        describe('with ngClick from ngTouch disabled and not overriding the original (Angular v1.5.0+)', function () {
+        // Angular v1.5.0+ is not supported – it's useless because ngTouch's
+        // ngClick is disabled by default, so if you don't want it, don't enable
+        // it – but we can keep this test as proof of concept.
+        describe('with ngClick from ngTouch disabled and not overriding the original (Angular v1.5.0+ by default)', function () {
 
             beforeEach(function () {
 
