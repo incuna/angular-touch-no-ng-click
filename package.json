@@ -1,6 +1,6 @@
 {
   "name": "angular-touch-no-ng-click",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Allows you to use ngTouch without its touch-enabled ngClick override",
   "directories": {
     "test": "test"
