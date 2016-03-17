@@ -30,27 +30,50 @@
             // fails with:
             // "Expected function to throw Error: my error message, but instead threw Error: my error message"
 
-            jasmine.addMatchers({
-                toThrowInjectorInvokeError: function (utils) {
-                    return {
-                        compare: function (actual, expected) {
-                            var result = {};
-                            result.pass = false;
-                            try {
-                                actual();
-                            } catch (actualError) {
+            var errorMessageMatcher = function (utils) {
+                return {
+                    compare: function (actual, expected) {
+                        var result = {};
+                        result.pass = false;
+                        try {
+                            actual();
+                        } catch (actualError) {
+                            if (expected instanceof RegExp) {
+                                result.pass = expected.test(actualError.message);
+                            } else {
                                 result.pass = utils.equals(actualError.message, expected);
-                                if (result.pass) {
-                                    result.message = 'Expected function to throw ' + expected + ', but it threw ' + actualError.message;
-                                } else {
-                                    result.message = 'Expected function not to throw ' + expected;
-                                }
-                                return result;
                             }
+                            if (result.pass) {
+                                result.message = 'Expected function to throw ' + expected + ', but it threw ' + actualError.message;
+                            } else {
+                                result.message = 'Expected function not to throw ' + expected;
+                            }
+                            return result;
                         }
-                    };
-                }
-            });
+                    }
+                };
+            };
+
+            var env = jasmine.getEnv();
+            var jasmineVersion;
+            if (env.version && env.version().major < 2) {
+                jasmineVersion = 1;
+            } else if (jasmine.version && jasmine.version.charAt(0) < 2) {
+                jasmineVersion = 1;
+            }
+
+            if (jasmineVersion === 1) {
+                this.addMatchers({
+                    toThrowInjectorInvokeError: errorMessageMatcher,
+                    // For jasmine 1 we need to add the toThrowError matcher.
+                    toThrowError: errorMessageMatcher
+                });
+            } else {
+                jasmine.addMatchers({
+                    toThrowInjectorInvokeError: errorMessageMatcher
+                });
+            }
+
 
             this.addOtherNgClick = () => mockDirective('ngClick');
 
