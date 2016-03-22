@@ -22,7 +22,7 @@
     "load-grunt-tasks": "3.4.1"
   },
   "scripts": {
-    "postinstall": "node scripts/setBowerResolution.js && bower install",
+    "postinstall": "bin/setAngularVersion && bower install",
     "start": "grunt watch",
     "test": "grunt test-src",
     "preversion": "grunt dist test",
