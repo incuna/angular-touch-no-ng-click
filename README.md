@@ -20,6 +20,14 @@ Install:
 bower install angular-touch-no-ng-click
 ```
 
+### In your app
+
+Add to your index:
+
+```html
+<script src="bower_components/dist/angular-touch-no-ng-click.min.js"></script>
+```
+
 Before, using `ngTouch`:
 
 ```js
