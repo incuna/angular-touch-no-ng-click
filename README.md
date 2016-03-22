@@ -138,6 +138,11 @@ Repeatedly run tests whilst writing code:
 npm start
 ```
 
+For debug information set `DEBUG=1`:
+```
+DEBUG=1 npm test
+```
+
 ## Releases
 
 - Update the changelog with the relevant changes

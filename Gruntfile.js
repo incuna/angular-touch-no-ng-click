@@ -10,6 +10,11 @@ module.exports = function (grunt) {
         require('jit-grunt')(grunt);
     }
 
+    // Set debug option if set in the environment.
+    if (process.env.DEBUG) {
+        grunt.option('debug', true);
+    }
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -90,7 +95,7 @@ module.exports = function (grunt) {
                 colors: true,
                 browsers: ['Firefox'],
                 singleRun: true,
-                logLevel: 'DEBUG'
+                logLevel: '<%= grunt.option("debug") ? "DEBUG" : "INFO" %>'
             },
             src: {
                 files: [
