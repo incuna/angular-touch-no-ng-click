@@ -15,8 +15,6 @@ cache:
 # changes to 1.4 as that is now in maintenance only, therefore we can reliably
 # support whatever the latest of 1.4 is.
 env:
-  global:
-    - DEBUG=true
   matrix:
     # First version we can test is 1.2.11 because previous versions of angular-
     # mocks do not support Jasmine 2.
