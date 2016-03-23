@@ -23,7 +23,7 @@ var checkAngularVersion = function (angularVersion) {
     return true;
 };
 
-exports.set = function (angularVersion) {
+exports.set = function (angularVersion, angularMocksVersion) {
     console.log('Setting version of Angular...');
 
     if (!checkInCI()) {
@@ -43,7 +43,7 @@ exports.set = function (angularVersion) {
     // Set the precise dependency versions.
     bowerJSON.dependencies.angular = angularVersion;
     bowerJSON.dependencies['angular-touch'] = angularVersion;
-    bowerJSON.devDependencies['angular-mocks'] = angularVersion;
+    bowerJSON.devDependencies['angular-mocks'] = angularMocksVersion || angularVersion;
     console.log('dependencies', bowerJSON.dependencies);
     console.log('devDependencies', bowerJSON.devDependencies);
 
@@ -54,7 +54,7 @@ exports.set = function (angularVersion) {
     return true;
 };
 
-exports.test = function (angularVersion) {
+exports.test = function (angularVersion, angularMocksVersion) {
     console.log('Testing version of Angular...');
 
     var fs = require('fs');
@@ -84,9 +84,14 @@ exports.test = function (angularVersion) {
     console.log('Testing bower dependencies...');
 
     // Compare each version against angularVersion
+    var rAngularMocks = /angular-mocks/;
     var results = libBowerJSONFiles.map(file => {
         var config = JSON.parse(fs.readFileSync(file));
-        var isCorrect = semver.satisfies(config.version, angularVersion);
+        var versionToTest = angularVersion;
+        if (rAngularMocks.test(file) && angularMocksVersion) {
+            versionToTest = angularMocksVersion;
+        }
+        var isCorrect = semver.satisfies(config.version, versionToTest);
         console.log(config.name, config.version, isCorrect ? 'correct' : 'incorrect');
         return isCorrect;
     });
