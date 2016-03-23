@@ -61,6 +61,7 @@ exports.test = function (angularVersion) {
     var path = require('path');
     var glob = require('glob');
     var bower = require('bower');
+    var semver = require('semver');
 
     if (!checkInCI()) {
         return;
@@ -85,7 +86,7 @@ exports.test = function (angularVersion) {
     // Compare each version against angularVersion
     var results = libBowerJSONFiles.map(file => {
         var config = JSON.parse(fs.readFileSync(file));
-        var isCorrect = config.version === angularVersion;
+        var isCorrect = semver.satisfies(config.version, angularVersion);
         console.log(config.name, config.version, isCorrect ? 'correct' : 'incorrect');
         return isCorrect;
     });

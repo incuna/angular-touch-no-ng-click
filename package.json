@@ -19,7 +19,8 @@
     "karma-coverage": "0.5.5",
     "karma-firefox-launcher": "0.1.7",
     "karma-jasmine": "0.3.7",
-    "load-grunt-tasks": "3.4.1"
+    "load-grunt-tasks": "3.4.1",
+    "semver": "5.1.0"
   },
   "scripts": {
     "postinstall": "bin/setAngularVersion && bower install",
