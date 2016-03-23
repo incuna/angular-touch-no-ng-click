@@ -75,7 +75,7 @@ module.exports = function (grunt) {
                 preprocessors: {
                     'src/**/*.js': 'coverage'
                 },
-                reporters: ['progress', 'coverage'],
+                reporters: ['dots', 'coverage'],
                 coverageReporter: {
                     dir: 'coverage',
                     reporters: [
