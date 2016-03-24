@@ -40,10 +40,12 @@ exports.set = function (angularVersion, angularMocksVersion) {
     // Get bower.json
     var bowerJSON = JSON.parse(fs.readFileSync('bower.json'));
 
+    bowerJSON.resolutions = bowerJSON.resolutions || {};
+
     // Set the precise dependency versions.
-    bowerJSON.dependencies.angular = angularVersion;
-    bowerJSON.dependencies['angular-touch'] = angularVersion;
-    bowerJSON.devDependencies['angular-mocks'] = angularMocksVersion || angularVersion;
+    bowerJSON.dependencies.angular = bowerJSON.resolutions.angular = angularVersion;
+    bowerJSON.dependencies['angular-touch'] = bowerJSON.resolutions['angular-touch'] = angularVersion;
+    bowerJSON.devDependencies['angular-mocks'] = bowerJSON.resolutions['angular-mocks'] = angularMocksVersion || angularVersion;
     console.log('dependencies', bowerJSON.dependencies);
     console.log('devDependencies', bowerJSON.devDependencies);
 
