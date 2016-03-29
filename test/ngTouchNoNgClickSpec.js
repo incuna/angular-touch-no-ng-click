@@ -1,5 +1,7 @@
 /* jshint es3: false, esnext: true */
 
+// These tests only run in Angular 1.2.11+
+
 (function () {
 
     'use strict';

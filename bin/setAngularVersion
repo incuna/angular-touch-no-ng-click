@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+var bowerAngularVersions = require('../scripts/bowerAngularVersions');
+
+bowerAngularVersions.set(process.env.ANGULAR_VERSION, process.env.ANGULAR_MOCKS_VERSION);

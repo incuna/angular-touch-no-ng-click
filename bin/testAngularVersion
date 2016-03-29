@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+var bowerAngularVersions = require('../scripts/bowerAngularVersions');
+
+var success = bowerAngularVersions.test(process.env.ANGULAR_VERSION, process.env.ANGULAR_MOCKS_VERSION);
+if (!success) {
+    process.exit(1);
+}
